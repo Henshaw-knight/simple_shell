@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
 	no_bytes = getline(&buf, &n, stdin);
 	printf("%ld\n", no_bytes);
 	size_t i = 0;
-
-	tokens = _strtok(buf, " ");
+//	buf[strlen(buf) - 1] = '\0';
+	tokens = _strtok(buf, " \n");
 
 	while (tokens[i])
 	{
