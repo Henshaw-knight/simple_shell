@@ -6,22 +6,21 @@
 char **_strtok(char *str, char *delim)
 {
     char *token;
-    char *str2 = malloc(sizeof(char) * strlen(str));
-    strcpy(str2, str);
     size_t i = 0, len = 0;
 
-    while (str2[i] != '\0')
+    while (str[i] != '\0')
     {
         len++;
         i++;
     }
     i = 0;
-    char **tokenArr = malloc(sizeof(char) * len);
+    char **tokenArr = malloc((sizeof(char *) * len) + 1);
 
-    token = strtok(str2, delim);
+    token = strtok(str, delim);
     while (token)
     {
-        tokenArr[i] = token;
+	tokenArr[i] = malloc(sizeof(char) * strlen(token));
+	strcpy(tokenArr[i], token);
         i++;
         token = strtok(NULL, delim);
     }
@@ -30,18 +29,3 @@ char **_strtok(char *str, char *delim)
 
     return (tokenArr);
 }
-
-/**
- * int main(void)
-{
-    char str[] = "I love you";
-    char **tokens = _strtok(str, " ");
-    int i = 0;
-
-    while (tokens[i])
-    {
-        printf("%s", tokens[i]);
-        i++;
-    }	
-}
-*/
