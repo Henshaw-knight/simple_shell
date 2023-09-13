@@ -20,9 +20,12 @@ char *_getenv(const char *name)
 		}
 		i++;
 	}
+	return ("SUCCESS");
 }
-
+/**
 int main(void)
 {
 	_getenv("LC_ALL");
+	return (0);
 }
+*/
