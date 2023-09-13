@@ -14,39 +14,39 @@ void prompt(void)
 
 int main(int argc, char *argv[], char **env)
 {
-	(void) argc;
-	char *buf = NULL,  **tokens = NULL, **path = NULL;
-	/* char *env[] = {NULL}; */
+	char *buf = NULL, **tokens = NULL, **path = NULL;
 	size_t n = 0;
 	ssize_t no_bytes;
 	pid_t pid, wait_status;
 	int status;
 
-	// array of strings holding the paths in PATH environment variable
+	(void) argc;
+	(void) no_bytes;
+	/* array of strings holding the paths in PATH environment variable */
 	path = getPath(env);
 	while (1)
 	{
 		size_t i = 0;
 		prompt();
 		no_bytes = getline(&buf, &n, stdin);
-		/* buf[strlen(buf) - 1] = '\0'; */
 		tokens = _strtok(buf, " \n");
 
 		while (path[i] != NULL)
 		{
-			//create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc)
-			char *absolute_path == strcat(path[i], tokens[0]); //use _strcat
+			/* create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
+			char *absolute_path = strcat(path[i], tokens[0]); /* use _strcat */
 			i++;
-		// checks if executable exists (should work for commands in the form "ls" or "/bin/ls"
+		/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
 		if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
 		{
-			//forking begins from here if executable exists
+			/* forking begins from here if executable exists */
 			pid = fork();
 
 			if (pid < 0)
 			{
-				perror("Error: ");
 				size_t j = 0;
+
+				perror("Error: ");
 
 				while (tokens[j] != NULL)
 				{
@@ -58,8 +58,8 @@ int main(int argc, char *argv[], char **env)
 			}
 			else if (pid == 0)
 			{
-				exec_cmd(tokens, argv[0], env);
 				size_t j = 0;
+				exec_cmd(tokens, argv[0], env);
 
 				while (tokens[j] != NULL)
 				{
@@ -67,10 +67,12 @@ int main(int argc, char *argv[], char **env)
 					j++;
 				}
 				free(tokens);
-				//FREE path
+				/* FREE path */
 			}
 			else
 			{
+				size_t j = 0;
+
 				wait_status = waitpid(pid, &status, 0);
 				if (wait_status == -1)
 				{
@@ -84,7 +86,6 @@ int main(int argc, char *argv[], char **env)
 					free(tokens);
 					exit(EXIT_FAILURE);	
 				}
-				size_t j = 0;
 
 				while (tokens[j] != NULL)
 				{
@@ -92,11 +93,11 @@ int main(int argc, char *argv[], char **env)
 					j++;
 				}
 				free(tokens);
-				//FREE path
+				/* FREE path */
 			}
 			break;
 		}
-		} //end while for path
+		} /* end while for path */
 
 /**		pid = fork();
 

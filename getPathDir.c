@@ -60,6 +60,7 @@ void exec_cmd(char **tokens, char *shell, char **env)
 	}
 	else
 	{
+		size_t j = 0;
 		char *absolute_path = NULL;
 		path = getPath(env);
 
@@ -82,7 +83,6 @@ void exec_cmd(char **tokens, char *shell, char **env)
 					}
 					free(path);
 
-					size_t j = 0;
 					while (tokens[j] != NULL)
 					{
 						free(tokens[j]);
@@ -94,8 +94,7 @@ void exec_cmd(char **tokens, char *shell, char **env)
 			}
 			i++;
 		}
-		//command does not exist. Print error message and free memory
-		size_t j = 0;
+		/* command does not exist. Print error message and free memory */
 		while (path[j] != NULL)
 		{
 			free(path[j]);
