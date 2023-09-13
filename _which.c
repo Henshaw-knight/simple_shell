@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-int main(int argc, char *argv[])
+int _which(int argc, char *argv[])
 {
 	size_t i = 1;
 	struct stat sf;
@@ -26,4 +26,5 @@ int main(int argc, char *argv[])
 		}
 		i++;
 	}
+	return (0);
 }
