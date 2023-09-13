@@ -92,6 +92,7 @@ void exec_cmd(char **tokens, char *shell, char **env)
 			}
 			i++;
 		}
+		//command does not exist. Print error message and free memory
 		size_t j = 0;
 		while (path[j] != NULL)
 		{
