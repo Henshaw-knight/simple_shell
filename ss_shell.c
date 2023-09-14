@@ -41,7 +41,8 @@ int main(int argc, char *argv[], char **env)
 			strcat(absolute_path, tokens[0]);
 			absolute_path[strlen(absolute_path) + 1] = '\0';
 /*			printf("%s\n", absolute_path);*/
-		
+
+			/* free path already? */	
 			/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
 			if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
 			{
@@ -60,7 +61,7 @@ int main(int argc, char *argv[], char **env)
 				{
 					exec_cmd(tokens, absolute_path, argv[0], env);
 					free_memory(tokens);
-					free_memory(path); /* FREE path */
+					/* free_memory(path);*/ /* FREE path */
 				}
 				else
 				{
