@@ -15,13 +15,13 @@ char **getPath(char **env)
 	var = strtok(env[i], "=");
 	while (env[i] != NULL)
 	{
+		i++;
 		if (strcmp(var, "PATH") == 0)
 		{
 			val = strtok(NULL, "\n");
 			dir = _strtok(val, ":");
 			return (dir);
 		}
-		i++;
 		var = strtok(env[i], "=");
 	}
 	return (NULL);
@@ -66,9 +66,8 @@ void exec_cmd(char **tokens, char *shell, char **env)
 
 		while (path[i] != NULL)
 		{
+			absolute_path = strcat(path[i], "/");
 			absolute_path = strcat(path[i], tokens[0]);
-			absolute_path[strlen(absolute_path)] = '\0';// use _strlen
-//			absolute_path = strcat(absolute_path, '\0');
 			if (stat(absolute_path, &file_status) == 0)
 			{
 				if (execve(absolute_path, tokens, env) == -1)
