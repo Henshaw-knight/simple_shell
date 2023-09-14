@@ -31,6 +31,12 @@ int main(int argc, char *argv[], char **env)
 		no_bytes = getline(&buf, &n, stdin);
 		tokens = _strtok(buf, " \n");
 
+		if (_strcmp(tokens[0], "exit") == 0)
+		{
+			free(buf);
+			exit_shell(tokens);
+		}
+
 		while (path[i] != NULL)
 		{
 			/* create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
@@ -38,10 +44,8 @@ int main(int argc, char *argv[], char **env)
 			char *absolute_path = malloc(strlen(path[i]) + strlen(tokens[0]) + 2);
 			/* check if allocation succeeds */
 			strcpy(absolute_path, path[i]);
-			strcat(absolute_path, "/");
-			strcat(absolute_path, tokens[0]);
-			absolute_path[strlen(absolute_path) + 1] = '\0';
-/*			printf("%s\n", absolute_path);*/
+			_strcat(absolute_path, tokens[0]);
+			/* printf("%s\n", absolute_path); */
 
 		/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
 		if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
