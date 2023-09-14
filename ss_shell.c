@@ -34,7 +34,7 @@ int main(int argc, char *argv[], char **env)
 		while (path[i] != NULL)
 		{
 			/* create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
-			char *absolute_path = strcat(path[i], tokens[0]); /* use _strcat */
+			char *absolute_path = _strcat(path[i], tokens[0]); /* use _strcat */
 			i++;
 		/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
 		if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
