@@ -34,6 +34,7 @@ int main(int argc, char *argv[], char **env)
 		while (path[i] != NULL)
 		{
 			/* create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
+
 			char *absolute_path = malloc(strlen(path[i]) + strlen(tokens[0]) + 2);
 			/* check if allocation succeeds */
 			strcpy(absolute_path, path[i]);
@@ -41,10 +42,10 @@ int main(int argc, char *argv[], char **env)
 			strcat(absolute_path, tokens[0]);
 			absolute_path[strlen(absolute_path) + 1] = '\0';
 /*			printf("%s\n", absolute_path);*/
-		
-			/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
-			if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
-			{
+
+		/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
+		if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
+		{
 /*				free(absolute_path);
 				printf("got access to executables\n");*/
 				/* forking begins from here if executable exists */

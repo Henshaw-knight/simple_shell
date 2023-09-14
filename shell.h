@@ -15,5 +15,8 @@ char **getPath(char **env);
 void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env);
 void print_env(char **env);
 void free_memory(char **buffer);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+char *_strcat(char *dest, char *src);
 
 #endif
