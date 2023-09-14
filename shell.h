@@ -14,5 +14,6 @@ void prompt(void);
 char **getPath(char **env);
 void exec_cmd(char **tokens, char *shell, char **env);
 void print_env(char **env);
+void free_memory(char **buffer);
 
 #endif

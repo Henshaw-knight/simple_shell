@@ -47,81 +47,30 @@ int main(int argc, char *argv[], char **env)
 
 			if (pid < 0)
 			{
-				size_t j = 0;
-
-				perror("Error: ");
-
-				while (tokens[j] != NULL)
-				{
-					free(tokens[j]);
-					j++;
-				}
-				free(tokens);
+				free_memory(tokens);
+				perror("Error: (fork)");
 				exit(EXIT_FAILURE);
 			}
 			else if (pid == 0)
 			{
-				size_t j = 0;
 				exec_cmd(tokens, argv[0], env);
-
-				while (tokens[j] != NULL)
-				{
-					free(tokens[j]);
-					j++;
-				}
-				free(tokens);
+				free_memory(tokens);
 				/* FREE path */
 			}
 			else
 			{
-				size_t j = 0;
-
 				wait_status = waitpid(pid, &status, 0);
 				if (wait_status == -1)
 				{
-					size_t j = 0;
-
-					while (tokens[j] != NULL)
-					{
-						free(tokens[j]);
-						j++;
-					}
-					free(tokens);
+					free_memory(tokens);
 					exit(EXIT_FAILURE);	
 				}
 
-				while (tokens[j] != NULL)
-				{
-					free(tokens[j]);
-					j++;
-				}
-				free(tokens);
+				free_memory(tokens);
 				/* FREE path */
 			}
 			break;
 		}
 		} /* end while for path */
-
-/**		pid = fork();
-
-		if (pid == -1)
-			return (-1);
-		if (pid == 0)
-		{
-//			int exec_val = execve(tokens[0], tokens, NULL);
-			if (execve(tokens[0], tokens, NULL) == -1)
-			{
-				perror("execve");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			if (wait(NULL) == -1)
-			{
-				perror("wait");
-				exit(EXIT_FAILURE);
-			}
-		}*/
 	}
 }
