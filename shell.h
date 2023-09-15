@@ -26,5 +26,6 @@ int _strcmp(char *s1, char *s2);
 int _isdigit(char *num);
 int _atoi(char *s);
 void exit_shell(char **args);
+void _EOF(char *buf);
 
 #endif

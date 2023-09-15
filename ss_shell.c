@@ -19,6 +19,7 @@ int main(int argc, char *argv[], char **env)
 	ssize_t no_bytes;
 
 	(void) argc;
+	/* (void) no_bytes; */
 	/* array of strings holding the paths in PATH environment variable */
 	path = getPath(env);
 	while (1)
@@ -27,11 +28,13 @@ int main(int argc, char *argv[], char **env)
 		prompt();
 		no_bytes = getline(&buf, &n, stdin);
 		
-/*		tokens = _strtok(buf, " \n");*/
+		if (no_bytes == EOF)
+			_EOF(buf);	
 		if (_strcmp(buf, "\n") == 0)
 			free(buf);
+
 		tokens = _strtok(buf, " \n");
-		
+
 		if (_strcmp(tokens[0], "exit") == 0)
 		{
 			free(buf);
