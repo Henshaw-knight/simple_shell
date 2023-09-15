@@ -70,3 +70,23 @@ void exit_shell(char **args)
 		exit(status);
 	}
 }
+
+/**
+ * _EOF - function that handles "end of file" condition
+ * @buf: the input
+ *
+ * Return: void (nothing)
+ */
+void _EOF(char *buf)
+{
+	if (buf)
+	{
+		free(buf);
+		buf = NULL;
+	}
+
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
+	free(buf);
+	exit(EXIT_SUCCESS);
+}

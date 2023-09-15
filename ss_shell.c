@@ -21,7 +21,7 @@ int main(int argc, char *argv[], char **env)
 	int status;
 
 	(void) argc;
-	(void) no_bytes;
+	/* (void) no_bytes; */
 	/* array of strings holding the paths in PATH environment variable */
 	path = getPath(env);
 	while (1)
@@ -30,6 +30,9 @@ int main(int argc, char *argv[], char **env)
 		prompt();
 		no_bytes = getline(&buf, &n, stdin);
 		tokens = _strtok(buf, " \n");
+
+		if (no_bytes == EOF)
+			_EOF(buf);
 
 		if (_strcmp(tokens[0], "exit") == 0)
 		{
