@@ -14,7 +14,7 @@ void prompt(void)
 
 int main(int argc, char *argv[], char **env)
 {
-	char *buf = NULL, **tokens = NULL, **path = NULL;
+	char *buf = NULL, **tokens = NULL, *absolute_path = NULL, **path = NULL;
 	size_t n = 0;
 	ssize_t no_bytes;
 	pid_t pid, wait_status;
@@ -39,17 +39,20 @@ int main(int argc, char *argv[], char **env)
 
 		while (path[i] != NULL)
 		{
-			/* create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
+			absolute_path = get_full_cmd(path[i], tokens[0]);
 
-			char *absolute_path = malloc(strlen(path[i]) + strlen(tokens[0]) + 2);
+/*			 create absolute path here (e.g. /bin/ls or /usr/bin/ls ...etc) */
+
+			/*char *absolute_path = malloc(_strlen(path[i]) + _strlen(tokens[0]) + 2);*/
 			/* check if allocation succeeds */
-			strcpy(absolute_path, path[i]);
+/*			_strcpy(absolute_path, path[i]);
 			_strcat(absolute_path, tokens[0]);
-			/* printf("%s\n", absolute_path); */
+			 printf("%s\n", absolute_path); */
 
-		/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
-		if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
-		{
+/*			free_memory(path); FREE path */
+			/* checks if executable exists (should work for commands in the form "ls" or "/bin/ls" */
+			if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
+			{
 /*				free(absolute_path);
 				printf("got access to executables\n");*/
 				/* forking begins from here if executable exists */
@@ -58,14 +61,15 @@ int main(int argc, char *argv[], char **env)
 				if (pid < 0)
 				{
 					free_memory(tokens);
+					free(absolute_path);
 					perror("Error: (fork)");
 					exit(EXIT_FAILURE);
 				}
 				else if (pid == 0)
 				{
 					exec_cmd(tokens, absolute_path, argv[0], env);
-					free_memory(tokens);
-					free_memory(path); /* FREE path */
+					/* free_memory(tokens); */
+					/* free_memory(path);*/ /* FREE path */
 				}
 				else
 				{
@@ -73,16 +77,24 @@ int main(int argc, char *argv[], char **env)
 					if (wait_status == -1)
 					{
 						free_memory(tokens);
+						free(absolute_path);
 						exit(EXIT_FAILURE);	
 					}
-
-			/*		free_memory(tokens);
-					free_memory(path);  FREE path */
+					free(absolute_path);
+			/*		free_memory(tokens); */
 				}
 				break;
 			}
 			free(absolute_path);
 			i++;
 		} /* end while for path */
+		/* error message for commands not found */
+		if (path[i] == NULL)
+		{
+			write(STDOUT_FILENO, argv[0], strlen(argv[0]));
+			write(STDOUT_FILENO, "\n", 1);
+		}
 	} /* end while for while (1) */
+	
+	exit(EXIT_SUCCESS);
 }

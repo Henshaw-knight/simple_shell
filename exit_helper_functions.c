@@ -2,7 +2,6 @@
 
 /**
  * _isdigit - function that checks if input is a number
- *
  * @num: the input to check
  *
  * Return: 1 if num is a number, 0 otherwise

@@ -12,6 +12,7 @@
 char **_strtok(char *str, char *delim);
 void prompt(void);
 char **getPath(char **env);
+char *get_full_cmd(char *path, char *command);
 void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env);
 void print_env(char **env);
 void free_memory(char **buffer);

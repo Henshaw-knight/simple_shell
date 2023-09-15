@@ -13,8 +13,14 @@ void print_env(char **env)
 
 	while (env[i] != NULL)
 	{
-		write(STDOUT_FILENO, env[i], strlen(env[i])); /* use _strlen() */
+		write(STDOUT_FILENO, env[i], _strlen(env[i])); /* use _strlen() */
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
+	return;
 }
+
+/*int main(int argc, char **argv, char **env)
+{
+	print_env(env);
+}*/
