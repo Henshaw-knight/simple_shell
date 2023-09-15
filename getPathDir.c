@@ -68,10 +68,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	size_t i = 0;*/
 	struct stat file_status;
 
-	if (_strcmp(tokens[0], "env") == 0)
-/*		execve(tokens[0], tokens, env);*/
-		print_env(env);
-	else if (stat(tokens[0], &file_status) == 0)
+	if (stat(tokens[0], &file_status) == 0)
 	{
 		if (execve(tokens[0], tokens, env) == -1)
 		{
