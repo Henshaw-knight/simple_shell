@@ -28,6 +28,31 @@ char **getPath(char **env)
 }
 
 /**
+ * get_full_cmd - get the full path to the executable
+ * path: the directory to use in PATH environment variable
+ * command: the command to be run
+ *
+ * Return: the full path to the command executable
+ */
+
+char *get_full_cmd(char *path, char *command)
+{
+	char *full_path = NULL;
+
+	full_path = malloc(_strlen(path) + _strlen(command) + 2);
+
+	if (full_path != NULL)
+	{
+		_strcpy(full_path, path);
+		_strcat(full_path, command);
+
+		return (full_path);
+	}
+	free(full_path);
+	return (NULL);
+}
+
+/**
  * exec_cmd - executes the command (first string in tokens)
  * tokens: array of strings that stores the commands
  * shell: name of the shell
@@ -43,7 +68,10 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	size_t i = 0;*/
 	struct stat file_status;
 
-	if (stat(tokens[0], &file_status) == 0)
+	if (_strcmp(tokens[0], "env") == 0)
+/*		execve(tokens[0], tokens, env);*/
+		print_env(env);
+	else if (stat(tokens[0], &file_status) == 0)
 	{
 		if (execve(tokens[0], tokens, env) == -1)
 		{
@@ -55,21 +83,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	}
 	else if (stat(absolute_path, &file_status) == 0)
 	{
-/*		char *absolute_path = NULL;
-		path = getPath(env);
-
-		while (path[i] != NULL)
-		{
-			absolute_path = malloc(strlen(path[i]) + strlen(tokens[0]) + 2);
-			 check if allocation succeeds */
-/*			strcpy(absolute_path, path[i]);
-			strcat(absolute_path, "/");
-			strcat(absolute_path, tokens[0]);
-			absolute_path[strlen(absolute_path) + 1] = '\0';
-
-			if (stat(absolute_path, &file_status) == 0)
-			{
-				printf("%s-%ld\n", absolute_path, strlen(absolute_path));  remove later */
+		/* printf("%s-%ld\n", absolute_path, strlen(absolute_path));  remove later */
 		if (execve(absolute_path, tokens, env) == -1)
 		{
 /*			free_memory(path);*/
@@ -79,12 +93,9 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 
 			exit(EXIT_FAILURE);
 		}
-/*			}
-			free(absolute_path);
-			i++;
-		}*/
 	}
 	/* command does not exist. Print error message and free memory */
-/*	free_memory(path);*/
-	/* print error message */
+	/* error message for commands not found */
+	write(STDOUT_FILENO, shell, strlen(shell));
+	write(STDOUT_FILENO, "\n", 1);
 }
