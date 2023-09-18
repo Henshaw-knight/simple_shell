@@ -102,12 +102,16 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	/* error message for commands not found */
 }
 
-void error_message(char **tokens, char *full_path, char *shell)
+void error_message(char **tokens, char *full_path, char *shell, size_t count)
 {
+	char count_char = count + '0';
+
 	if (full_path == NULL)
 	{
 		write(STDOUT_FILENO, shell, strlen(shell));
-		write(STDOUT_FILENO, ": 1: ", 5);
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, &count_char, 1);
+		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, tokens[0], strlen(tokens[0]));
 		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, "not found\n", 10);
