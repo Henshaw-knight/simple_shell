@@ -5,8 +5,8 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 	pid_t pid, wait_status;
 	int status;
 
-/*	if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
-	{*/
+	if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
+	{
 	/*	free(absolute_path);
 		printf("got access to executables\n");*/
 
@@ -38,5 +38,6 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 			free(absolute_path);
 			/*		free_memory(tokens); */
 		}
-/*	}*/
+	/*	return;*/
+	}
 }

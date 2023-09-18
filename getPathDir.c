@@ -45,8 +45,8 @@ char *get_full_cmd(char *path, char *command)
 	{
 		_strcpy(full_path, path);
 		_strcat(full_path, command);
-
-		return (full_path);
+		if (access(full_path, X_OK) == 0 || access(command, X_OK) == 0)
+			return (full_path);
 	}
 	free(full_path);
 	return (NULL);
@@ -54,10 +54,10 @@ char *get_full_cmd(char *path, char *command)
 
 /**
  * exec_cmd - executes the command (first string in tokens)
- * tokens: array of strings that stores the commands
- * shell: name of the shell
- * absolute_path: the full path of command executable
- * env: the environment variables of the process
+ * @tokens: array of strings that stores the commands
+ * @shell: name of the shell
+ * @absolute_path: the full path of command executable
+ * @env: the environment variables of the process
  *
  * Return: Nothing.
  */
@@ -68,6 +68,13 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	size_t i = 0;*/
 	struct stat file_status;
 
+	/*if (_strcmp(tokens[0], "cd") == 0)
+		change_dir(tokens[1]);*/
+/*	if (_strcmp(tokens[0], "env") == 0)
+	{
+		print_env(env);
+		return;
+	}*/
 	if (stat(tokens[0], &file_status) == 0)
 	{
 		if (execve(tokens[0], tokens, env) == -1)
@@ -93,6 +100,16 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	}
 	/* command does not exist. Print error message and free memory */
 	/* error message for commands not found */
-	write(STDOUT_FILENO, shell, strlen(shell));
-	write(STDOUT_FILENO, "\n", 1);
+}
+
+void error_message(char **tokens, char *full_path, char *shell)
+{
+	if (full_path == NULL)
+	{
+		write(STDOUT_FILENO, shell, strlen(shell));
+		write(STDOUT_FILENO, ": 1: ", 5);
+		write(STDOUT_FILENO, tokens[0], strlen(tokens[0]));
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, "not found\n", 10);
+	}
 }
