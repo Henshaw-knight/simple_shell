@@ -25,6 +25,7 @@ char *_strcat(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 int _isdigit(char *num);
 int _atoi(char *s);
+void error_message(char **tokens, char *full_path, char *shell);
 void exit_shell(char **args);
 void _EOF(char *buf);
 

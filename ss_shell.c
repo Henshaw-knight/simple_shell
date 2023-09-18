@@ -14,10 +14,10 @@ void prompt(void)
 
 /**
  * main - run the shell program
- * argc: number of arguments passeed to the program
- * argv: araay of strings holding the arguments passed
+ * @argc: number of arguments passeed to the program
+ * @argv: araay of strings holding the arguments passed
  * to program
- * env: the environment variables of process
+ * @env: the environment variables of process
  *
  * Return: Nothing
  */
@@ -46,17 +46,14 @@ int main(int argc, char *argv[], char **env)
 			print_env(env);
 		else
 		{
-		while (path[i] != NULL)
-		{
-			absolute_path = get_full_cmd(path[i], tokens[0]);
-			if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
-			{
-				child_process(tokens, absolute_path, argv[0], env);
-				break;
-			}
-			free(absolute_path), i++;
-		}	/* end while for path */
+			do {
+				absolute_path = get_full_cmd(path[i], tokens[0]);
+				child_process(tokens, absolute_path, argv[0], env), i++;
+			} while (path[i] != NULL && absolute_path == NULL);
+			error_message(tokens, absolute_path, argv[0]);
 		}
+		fflush(stdin);
+		buf = NULL;
 		if (no_bytes == -1)
 		{
 			free(buf), exit(EXIT_FAILURE);
