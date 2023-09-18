@@ -54,10 +54,10 @@ int main(int argc, char *argv[], char **env)
 		}
 		fflush(stdin);
 		buf = NULL;
-		if (no_bytes == -1)
-		{
-			free(buf), exit(EXIT_FAILURE);
-		}
+/**		if (no_bytes == -1)
+ *		{
+ *			free(buf), exit(EXIT_FAILURE);
+		}*/
 	} /* end while for while (1) */
 	exit(EXIT_SUCCESS);
 }

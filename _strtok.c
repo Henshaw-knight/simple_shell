@@ -1,7 +1,13 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
+#include "shell.h"
+
+/**
+ * _strtok - tokenizes a string and stores each token
+ * in an array of strings
+ * @str: string to tokenize
+ * @delim: the delimeter by which strin is tokenized
+ *
+ * Return: array of strings storing tokens.
+ */
 
 char **_strtok(char *str, char *delim)
 {

@@ -1,5 +1,15 @@
 #include "shell.h"
 
+/**
+ * child_process - forks a process
+ * @tokens: array of strings storing the commands
+ * @absolute_path: the absolute path of command executable
+ * @shell: name of the program
+ * @env: environment variables of the process
+ *
+ * Return: Nothing.
+ */
+
 void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 {
 	pid_t pid, wait_status;
@@ -7,10 +17,6 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 
 	if (access(tokens[0], X_OK) == 0 || access(absolute_path, X_OK) == 0)
 	{
-	/*	free(absolute_path);
-		printf("got access to executables\n");*/
-
-		/* forking begins from here if executable exists */
 		pid = fork();
 
 		if (pid < 0)
@@ -33,7 +39,7 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 			{
 				free_memory(tokens);
 				free(absolute_path);
-				exit(EXIT_FAILURE);	
+				exit(EXIT_FAILURE);
 			}
 			free(absolute_path);
 			/*		free_memory(tokens); */
