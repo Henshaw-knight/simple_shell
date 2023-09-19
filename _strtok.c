@@ -13,7 +13,7 @@ char **_strtok(char *str, char *delim)
 {
 	char *token = NULL;
 	size_t i = 0, len = 0;
-	char **tokenArr = NULL; 
+	char **tokenArr = NULL;
 
 	while (str[i] != '\0')
 	{
@@ -22,7 +22,7 @@ char **_strtok(char *str, char *delim)
 	}
 	i = 0;
 
-	tokenArr = malloc((sizeof(char *) * len) + 1);	
+	tokenArr = malloc((sizeof(char *) * len) + 1);
 	token = strtok(str, delim);
 	while (token)
 	{

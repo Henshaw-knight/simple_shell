@@ -13,6 +13,20 @@ void prompt(void)
 }
 
 /**
+ * signal_handler - handle CTRL+C signal
+ * @signum: signal that triggered the hanler
+ *
+ * Return: Nothing.
+ */
+
+void signal_handler(int signum)
+{
+	(void) signum;
+	write(STDOUT_FILENO, "\n", 1);
+	prompt();
+}
+
+/**
  * main - entry point, runs the shell program
  * @argc: number of arguments passed to the program
  * @argv: array of strings holding the arguments passed
@@ -33,35 +47,33 @@ int main(int argc, char *argv[], char **env)
 	{
 		size_t i = 0;
 
+		signal(SIGINT, signal_handler);
 		prompt();
 		count++;
 		no_bytes = getline(&buf, &n, stdin);
 		if (no_bytes == EOF)
-			free_memory(path),_EOF(buf);
-		if (no_bytes == 1) /* when enter key is pressed */
+			free_memory(path), _EOF(buf);
+		if (no_bytes == 1)
 			continue;
 		tokens = _strtok(buf, " \n");
 		free(buf);
 		if (_strcmp(tokens[0], "exit") == 0)
-		/*	free(buf),*/free_memory(path), exit_shell(tokens);
+			free_memory(path), exit_shell(tokens);
 		else if (_strcmp(tokens[0], "cd") == 0)
-			change_dir(tokens[1]);
+			change_dir(tokens[1]), free_memory(tokens);
 		else if (_strcmp(tokens[0], "env") == 0)
-			print_env(env);
+			print_env(env), free_memory(tokens);
 		else
 		{
 			do {
 				absolute_path = get_full_cmd(path[i], tokens[0]);
-				child_process(tokens, absolute_path, argv[0], env), i++;
+				if (absolute_path)
+					child_process(tokens, absolute_path, argv[0], env);
+				i++;
 			} while (path[i] != NULL && absolute_path == NULL);
 			error_message(tokens, absolute_path, argv[0], count);
 		}
 		fflush(stdin);
 		buf = NULL;
-		if (no_bytes == -1)
-		{
-			free_memory(path), free(buf), exit(EXIT_FAILURE);
-		}
-	}/* end while for while (1) */
-	exit(EXIT_SUCCESS);
+	}
 }
