@@ -2,7 +2,7 @@
 
 /**
  * getPath - get the paths to the command executables
- * env: the environment variables
+ * @env: the environment variables
  *
  * Return: an array to the paths in PATH variable
  */
@@ -29,8 +29,8 @@ char **getPath(char **env)
 
 /**
  * get_full_cmd - get the full path to the executable
- * path: the directory to use in PATH environment variable
- * command: the command to be run
+ * @path: the directory to use in PATH environment variable
+ * @command: the command to be run
  *
  * Return: the full path to the command executable
  */
@@ -64,17 +64,8 @@ char *get_full_cmd(char *path, char *command)
 
 void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 {
-/*	char **path = NULL;
-	size_t i = 0;*/
 	struct stat file_status;
 
-	/*if (_strcmp(tokens[0], "cd") == 0)
-		change_dir(tokens[1]);*/
-/*	if (_strcmp(tokens[0], "env") == 0)
-	{
-		print_env(env);
-		return;
-	}*/
 	if (stat(tokens[0], &file_status) == 0)
 	{
 		if (execve(tokens[0], tokens, env) == -1)
@@ -90,7 +81,6 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 		/* printf("%s-%ld\n", absolute_path, strlen(absolute_path));  remove later */
 		if (execve(absolute_path, tokens, env) == -1)
 		{
-/*			free_memory(path);*/
 			free_memory(tokens);
 			free(absolute_path);
 			perror(shell);
@@ -98,9 +88,17 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			exit(EXIT_FAILURE);
 		}
 	}
-	/* command does not exist. Print error message and free memory */
-	/* error message for commands not found */
 }
+
+/**
+ * error_message - prints error message
+ * @tokens: array of strings storing the command and its
+ * arguments
+ * @full_path: the absolute path to the command executable
+ * @shell: name of the shell program
+ *
+ * Return: Nothing.
+ */
 
 void error_message(char **tokens, char *full_path, char *shell, size_t count)
 {

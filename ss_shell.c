@@ -37,13 +37,13 @@ int main(int argc, char *argv[], char **env)
 		count++;
 		no_bytes = getline(&buf, &n, stdin);
 		if (no_bytes == EOF)
-			_EOF(buf);
+			free_memory(path),_EOF(buf);
 		if (no_bytes == 1) /* when enter key is pressed */
 			continue;
 		tokens = _strtok(buf, " \n");
-
+		free(buf);
 		if (_strcmp(tokens[0], "exit") == 0)
-			free(buf), exit_shell(tokens);
+		/*	free(buf),*/free_memory(path), exit_shell(tokens);
 		else if (_strcmp(tokens[0], "cd") == 0)
 			change_dir(tokens[1]);
 		else if (_strcmp(tokens[0], "env") == 0)
@@ -60,8 +60,8 @@ int main(int argc, char *argv[], char **env)
 		buf = NULL;
 		if (no_bytes == -1)
 		{
-			free(buf), exit(EXIT_FAILURE);
+			free_memory(path), free(buf), exit(EXIT_FAILURE);
 		}
-	} /* end while for while (1) */
+	}/* end while for while (1) */
 	exit(EXIT_SUCCESS);
 }

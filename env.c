@@ -17,10 +17,4 @@ void print_env(char **env)
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	return;
 }
-
-/*int main(int argc, char **argv, char **env)
-{
-	print_env(env);
-}*/

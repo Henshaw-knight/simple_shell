@@ -1,8 +1,8 @@
 #include "shell.h"
 
-/*
+/**
  * change_dir - change the directory
- * path: the path to change to
+ * @path: the path to change to
  *
  * Return: 0 on success, errno value on failure
  */
@@ -19,5 +19,6 @@ int change_dir(const char *path)
 		perror(path);
 		return (errno);
 	}
+	free(cwd);
 	return (0);
 }
