@@ -20,7 +20,5 @@ void free_memory(char **buffer)
 		j++;
 	}
 
-/*	if (buffer[j] == NULL)
-		free(buffer[j]);*/
 	free(buffer);
 }

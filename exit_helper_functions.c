@@ -29,14 +29,20 @@ int _atoi(char *s)
 	int i, sign = 1;
 	unsigned int num = 0;
 
-	/* check for characters outside the range of 0 - 9 to see if any equals '-' character */
+	/**
+	 * check for characters outside the range of 0 - 9
+	 * to see if any equals '-' character
+	 */
 	for (i = 0; (s[i] < '0' || s[i] > '9') && s[i] != '\0'; i++)
 	{
 		if (s[i] == '-')
 			sign *= -1;
 	}
 
-	/* check for characters within 0 - 9 rnage and covert them to int to give overall number */
+	/**
+	 * check for characters within 0 - 9 range
+	 * and covert them to int to give overall number
+	 */
 	for (i = 0; (s[i] >= 48 && s[i] <= 57) && s[i] != '\0'; i++)
 		num = (num * 10) + (s[i] - '0');
 

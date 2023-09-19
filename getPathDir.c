@@ -78,7 +78,6 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 	}
 	else if (stat(absolute_path, &file_status) == 0)
 	{
-		/* printf("%s-%ld\n", absolute_path, strlen(absolute_path));  remove later */
 		if (execve(absolute_path, tokens, env) == -1)
 		{
 			free_memory(tokens);
@@ -96,6 +95,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
  * arguments
  * @full_path: the absolute path to the command executable
  * @shell: name of the shell program
+ * @count: count of commands run in shell
  *
  * Return: Nothing.
  */
@@ -113,5 +113,6 @@ void error_message(char **tokens, char *full_path, char *shell, size_t count)
 		write(STDOUT_FILENO, tokens[0], strlen(tokens[0]));
 		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, "not found\n", 10);
+		free_memory(tokens);
 	}
 }

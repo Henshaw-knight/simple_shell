@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+void signal_handler(int signum);
 char **_strtok(char *str, char *delim);
 void prompt(void);
 char **getPath(char **env);
