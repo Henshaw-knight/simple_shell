@@ -19,5 +19,6 @@ int change_dir(const char *path)
 		perror(path);
 		return (errno);
 	}
+	free(cwd);
 	return (0);
 }

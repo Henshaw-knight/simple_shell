@@ -81,7 +81,6 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 		/* printf("%s-%ld\n", absolute_path, strlen(absolute_path));  remove later */
 		if (execve(absolute_path, tokens, env) == -1)
 		{
-/*			free_memory(path);*/
 			free_memory(tokens);
 			free(absolute_path);
 			perror(shell);
@@ -89,8 +88,6 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			exit(EXIT_FAILURE);
 		}
 	}
-	/* command does not exist. Print error message and free memory */
-	/* error message for commands not found */
 }
 
 /**

@@ -29,8 +29,8 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 		else if (pid == 0)
 		{
 			exec_cmd(tokens, absolute_path, shell, env);
-			/* free_memory(tokens); */
-			/* free_memory(path);*/ /* FREE path */
+			free(absolute_path);
+			free_memory(tokens);
 		}
 		else
 		{
@@ -42,8 +42,7 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 				exit(EXIT_FAILURE);
 			}
 			free(absolute_path);
-			/*		free_memory(tokens); */
+			free_memory(tokens);
 		}
-	/*	return;*/
 	}
 }
