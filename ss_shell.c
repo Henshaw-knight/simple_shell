@@ -38,7 +38,10 @@ int main(int argc, char *argv[], char **env)
 		no_bytes = getline(&buf, &n, stdin);
 		if (no_bytes == EOF)
 			_EOF(buf);
+		if (no_bytes == 1) /* when enter key is pressed */
+			continue;
 		tokens = _strtok(buf, " \n");
+
 		if (_strcmp(tokens[0], "exit") == 0)
 			free(buf), exit_shell(tokens);
 		else if (_strcmp(tokens[0], "cd") == 0)
