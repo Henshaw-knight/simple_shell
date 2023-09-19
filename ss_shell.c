@@ -13,9 +13,9 @@ void prompt(void)
 }
 
 /**
- * main - run the shell program
- * @argc: number of arguments passeed to the program
- * @argv: araay of strings holding the arguments passed
+ * main - entry point, runs the shell program
+ * @argc: number of arguments passed to the program
+ * @argv: array of strings holding the arguments passed
  * to program
  * @env: the environment variables of process
  *
@@ -25,7 +25,7 @@ void prompt(void)
 int main(int argc, char *argv[], char **env)
 {
 	char *buf = NULL, **tokens = NULL, *absolute_path = NULL, **path = NULL;
-	size_t n = 0;
+	size_t n = 0, count = 0;
 	ssize_t no_bytes;
 
 	(void) argc, path = getPath(env);
@@ -34,6 +34,7 @@ int main(int argc, char *argv[], char **env)
 		size_t i = 0;
 
 		prompt();
+		count++;
 		no_bytes = getline(&buf, &n, stdin);
 		if (no_bytes == EOF)
 			_EOF(buf);
@@ -50,7 +51,7 @@ int main(int argc, char *argv[], char **env)
 				absolute_path = get_full_cmd(path[i], tokens[0]);
 				child_process(tokens, absolute_path, argv[0], env), i++;
 			} while (path[i] != NULL && absolute_path == NULL);
-			error_message(tokens, absolute_path, argv[0]);
+			error_message(tokens, absolute_path, argv[0], count);
 		}
 		fflush(stdin);
 		buf = NULL;
