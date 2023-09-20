@@ -52,12 +52,15 @@ int _atoi(char *s)
 /**
  * exit_shell - function that exits the shell
  * @args: pointer to tokenized command
+ * @shell: the name of the shell program
+ * @count: number of times commands are run in the shell
  *
  * Return: void (Nothing)
  */
-void exit_shell(char **args)
+void exit_shell(char **args, char *shell, size_t count)
 {
 	int status = 0;
+	char count_char = count + '0';
 
 	if (args[1] == NULL)
 	{
@@ -70,11 +73,32 @@ void exit_shell(char **args)
 		status = _atoi(args[1]);
 		if (status > 255) /* MAX EXIT STATUS VALUE */
 			status = status % 256;
-
-		/* TODO: handle error when status is less than 0 */
-		free_memory(args);
-		exit(status);
+		if (status < 0)
+		{
+			write(STDOUT_FILENO, shell, _strlen(shell));
+			write(STDOUT_FILENO, ": ", 2), write(STDOUT_FILENO, &count_char, 1);
+			write(STDOUT_FILENO, ": ", 2);
+			write(STDOUT_FILENO, args[0], _strlen(args[0]));
+			write(STDOUT_FILENO, ": ", 2), write(STDOUT_FILENO, "Illegal number", 14);
+			write(STDOUT_FILENO, ": ", 2);
+			write(STDOUT_FILENO, args[1], _strlen(args[1]));
+			write(STDOUT_FILENO, "\n", 1), status = 2;
+		}
 	}
+	else
+	{
+		write(STDOUT_FILENO, shell, _strlen(shell));
+		write(STDOUT_FILENO, ": ", 2), write(STDOUT_FILENO, &count_char, 1);
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, args[0], _strlen(args[0]));
+		write(STDOUT_FILENO, ": ", 2), write(STDOUT_FILENO, "Illegal number", 14);
+		write(STDOUT_FILENO, ": ", 2);
+		write(STDOUT_FILENO, args[1], _strlen(args[1]));
+		write(STDOUT_FILENO, "\n", 1);
+		status = 2;
+	}
+	free_memory(args);
+	exit(status);
 }
 
 /**
