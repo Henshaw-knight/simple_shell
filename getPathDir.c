@@ -9,20 +9,24 @@
 
 char **getPath(char **env)
 {
-	char **dir = NULL, *var = NULL, *val = NULL;
+	char **dir = NULL, *var = NULL, *val = NULL, *var_dup = NULL;
 	size_t i = 0;
 
-	var = strtok(env[i], "=");
-	while (env[i] != NULL)
+	var_dup = _strdup(env[i]);
+	var = strtok(var_dup, "=");
+	while (var_dup != NULL)
 	{
 		i++;
 		if (strcmp(var, "PATH") == 0)
 		{
 			val = strtok(NULL, "\n");
 			dir = _strtok(val, ":");
+			free(var_dup);
 			return (dir);
 		}
-		var = strtok(env[i], "=");
+		free(var_dup);
+		var_dup = _strdup(env[i]);
+		var = strtok(var_dup, "=");
 	}
 	return (NULL);
 }
@@ -73,7 +77,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			free_memory(tokens);
 			perror(shell);
 
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
 	}
 	else if (stat(absolute_path, &file_status) == 0)
@@ -84,7 +88,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			free(absolute_path);
 			perror(shell);
 
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
 	}
 }
