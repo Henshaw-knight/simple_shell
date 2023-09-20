@@ -54,10 +54,11 @@ int _atoi(char *s)
  * @args: pointer to tokenized command
  * @shell: the name of the shell program
  * @count: number of times commands are run in the shell
+ * @exit_status: exit status
  *
  * Return: void (Nothing)
  */
-void exit_shell(char **args, char *shell, size_t count)
+void exit_shell(char **args, char *shell, size_t count, int exit_status)
 {
 	int status = 0;
 	char count_char = count + '0';
@@ -65,7 +66,7 @@ void exit_shell(char **args, char *shell, size_t count)
 	if (args[1] == NULL)
 	{
 		free_memory(args);
-		exit(EXIT_SUCCESS);
+		exit(exit_status);
 	}
 
 	if (_isdigit(args[1]))
