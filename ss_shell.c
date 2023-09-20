@@ -42,7 +42,7 @@ int main(int argc, char *argv[], char **env)
 	size_t n = 0, count = 0;
 	ssize_t no_bytes, exit_status = 0;
 
-	(void) argc, path = getPath(env);
+	(void) argc;
 	while (1)
 	{
 		size_t i = 0;
@@ -52,28 +52,32 @@ int main(int argc, char *argv[], char **env)
 		count++;
 		no_bytes = getline(&buf, &n, stdin);
 		if (no_bytes == EOF)
-			free_memory(path), _EOF(buf);
+			_EOF(buf);
 		if (no_bytes == 1)
 			continue;
 		tokens = _strtok(buf, " \n");
+		if (tokens == NULL)
+			continue;
 		free(buf);
 		if (_strcmp(tokens[0], "exit") == 0)
-			free_memory(path), exit_shell(tokens, argv[0], count);
+			exit_shell(tokens, argv[0], count);
 		else if (_strcmp(tokens[0], "cd") == 0)
 			change_dir(tokens[1]), free_memory(tokens);
 		else if (_strcmp(tokens[0], "env") == 0)
 			print_env(), free_memory(tokens);
 		else
 		{
+			path = getPath(env);
 			do {
 				absolute_path = get_full_cmd(path[i], tokens[0]);
 				if (absolute_path)
 					child_process(tokens, absolute_path, argv[0], env, &exit_status);
 				i++;
 			} while (path[i] != NULL && absolute_path == NULL);
+			free_memory(path);  
 			error_message(tokens, absolute_path, argv[0], count);
 		}
-		fflush(stdin);
+	/*	fflush(stdin);*/
 		buf = NULL;
 	}
 	return (exit_status);
