@@ -26,7 +26,7 @@ int child_process(char **tokens, char *absolute_path,
 		char *shell, char **env);
 
 int change_dir(const char *path);
-void print_env();
+void print_env(void);
 
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
