@@ -24,6 +24,11 @@ char **_strtok(char *str, char *delim)
 
 	tokenArr = malloc((sizeof(char *) * len) + 1);
 	token = strtok(str, delim);
+	if (token == NULL)
+	{
+		free(tokenArr);
+		return (NULL);
+	}
 	while (token)
 	{
 		tokenArr[i] = malloc(sizeof(char) * strlen(token) + 1);
