@@ -36,8 +36,8 @@ char *_strdup(char *str);
 int _isdigit(char *num);
 int _atoi(char *s);
 
-void exit_shell(char **args, char *shell, size_t count, int exit_status);
-void free_memory(char **buffer);
 void _EOF(char *buf);
+void free_memory(char **buffer);
+void exit_shell(char **args, char *shell, size_t count, int exit_status);
 
 #endif
