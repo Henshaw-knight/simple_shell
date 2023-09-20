@@ -21,7 +21,7 @@ void child_process(char **tokens, char *absolute_path,
 		char *shell, char **env, ssize_t *exit_status);
 int change_dir(const char *path);
 void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env);
-void print_env();
+void print_env(void);
 void free_memory(char **buffer);
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
