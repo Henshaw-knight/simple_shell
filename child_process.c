@@ -10,7 +10,7 @@
  * Return: Nothing.
  */
 
-void child_process(char **tokens, char *absolute_path, char *shell, char **env)
+void child_process(char **tokens, char *absolute_path, char *shell, char **env, ssize_t *exit_status)
 {
 	pid_t pid, wait_status;
 	int status;
@@ -26,7 +26,7 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 			free_memory(tokens);
 			free(absolute_path);
 			perror("Error: (fork)");
-			exit(EXIT_FAILURE);
+			exit(errno);
 		}
 		else if (pid == 0)
 		{
@@ -42,6 +42,10 @@ void child_process(char **tokens, char *absolute_path, char *shell, char **env)
 				free_memory(tokens);
 				free(absolute_path);
 				exit(EXIT_FAILURE);
+			}
+			if (WIFEXITED(status))
+			{
+				*exit_status = WEXITSTATUS(status);
 			}
 			free(absolute_path);
 			free_memory(tokens);

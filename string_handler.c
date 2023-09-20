@@ -89,3 +89,25 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (0);
 }
+
+/**
+ * _strdup - duplicates a string
+ * @str: string to duplicate
+ *
+ * Return: duplicated string
+ */
+
+char *_strdup(char *str)
+{
+	char *dup_str = malloc(_strlen(str) + 1);
+	int i = 0;
+
+	while (str[i] != '\0')
+	{
+		dup_str[i] = str[i];
+		i++;
+	}
+	dup_str[i] = '\0';
+
+	return (dup_str);
+}
