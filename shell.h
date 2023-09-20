@@ -13,14 +13,14 @@
 extern char **environ;
 
 void signal_handler(int signum);
-char **_strtok(char *str, char *delim);
 void prompt(void);
+char **_strtok(char *str, char *delim);
 char **getPath(char **env);
 char *get_full_cmd(char *path, char *command);
 int child_process(char **tokens, char *absolute_path,
 		char *shell, char **env);
-int change_dir(const char *path);
 int exec_cmd(char **tokens, char *absolute_path, char *shell, char **env);
+int change_dir(const char *path);
 void print_env();
 void free_memory(char **buffer);
 int _strlen(char *s);
