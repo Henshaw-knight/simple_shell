@@ -1,1 +1,1 @@
-Repo for C - Simple Shell Project
+Repo for C - AlX Simple Shell Project
