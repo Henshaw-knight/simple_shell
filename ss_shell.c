@@ -64,7 +64,7 @@ int main(int argc, char *argv[], char **env)
 		else if (_strcmp(tokens[0], "cd") == 0)
 			change_dir(tokens[1]), free_memory(tokens);
 		else if (_strcmp(tokens[0], "env") == 0)
-			print_env(), free_memory(tokens);
+			print_env(void), free_memory(tokens);
 		else
 		{
 			path = getPath(env);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[], char **env)
 					child_process(tokens, absolute_path, argv[0], env, &exit_status);
 				i++;
 			} while (path[i] != NULL && absolute_path == NULL);
-			free_memory(path);  
+			free_memory(path); 
 			error_message(tokens, absolute_path, argv[0], count);
 		}
 	/*	fflush(stdin);*/
