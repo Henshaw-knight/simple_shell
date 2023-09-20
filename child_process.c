@@ -6,11 +6,13 @@
  * @absolute_path: the absolute path of command executable
  * @shell: name of the program
  * @env: environment variables of the process
+ * @exit_status: status of the child process when exited
  *
  * Return: Nothing.
  */
 
-void child_process(char **tokens, char *absolute_path, char *shell, char **env, ssize_t *exit_status)
+void child_process(char **tokens, char *absolute_path,
+		char *shell, char **env, ssize_t *exit_status)
 {
 	pid_t pid, wait_status;
 	int status;
