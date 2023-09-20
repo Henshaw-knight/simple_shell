@@ -66,7 +66,7 @@ char *get_full_cmd(char *path, char *command)
  * Return: Nothing.
  */
 
-void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
+int exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 {
 	struct stat file_status;
 
@@ -77,7 +77,7 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			free_memory(tokens);
 			perror(shell);
 
-			exit(2);
+			return (2);
 		}
 	}
 	else if (stat(absolute_path, &file_status) == 0)
@@ -88,9 +88,10 @@ void exec_cmd(char **tokens, char *absolute_path, char *shell, char **env)
 			free(absolute_path);
 			perror(shell);
 
-			exit(2);
+			return (2);
 		}
 	}
+	return (0);
 }
 
 /**

@@ -2,12 +2,11 @@
 
 /**
  * print_env - print environment variables and values
- * @env: array of strings storing environment variables
  *
  * Return: Nothing.
  */
 
-void print_env()
+void print_env(void)
 {
 	size_t i = 0;
 
@@ -18,8 +17,3 @@ void print_env()
 		i++;
 	}
 }
-
-/*void main(void)
-{
-	print_env();
-}*/
