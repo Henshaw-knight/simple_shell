@@ -26,7 +26,7 @@ int _strlen(char *s)
  *
  * Return: the pointer to dest
  */
-char *_strcpy(char *dest, const char *src)
+char *_strcpy(char *dest, char *src)
 {
 	int i = 0;
 
@@ -75,7 +75,7 @@ char *_strcat(char *dest, char *src)
  * Return: 0, if s1 and s2 are equal, a -ve value if s1 < s2
  * or +ve value if s1 > s2
  */
-int _strcmp(const char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	int i = 0;
 
