@@ -106,11 +106,11 @@ void error_message(char **tokens, char *full_path, char *shell, size_t count)
 
 	if (full_path == NULL)
 	{
-		write(STDOUT_FILENO, shell, strlen(shell));
+		write(STDOUT_FILENO, shell, _strlen(shell));
 		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, &count_char, 1);
 		write(STDOUT_FILENO, ": ", 2);
-		write(STDOUT_FILENO, tokens[0], strlen(tokens[0]));
+		write(STDOUT_FILENO, tokens[0], _strlen(tokens[0]));
 		write(STDOUT_FILENO, ": ", 2);
 		write(STDOUT_FILENO, "not found\n", 10);
 		free_memory(tokens);

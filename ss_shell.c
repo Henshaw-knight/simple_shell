@@ -58,7 +58,7 @@ int main(int argc, char *argv[], char **env)
 		tokens = _strtok(buf, " \n");
 		free(buf);
 		if (_strcmp(tokens[0], "exit") == 0)
-			free_memory(path), exit_shell(tokens);
+			free_memory(path), exit_shell(tokens, argv[0], count);
 		else if (_strcmp(tokens[0], "cd") == 0)
 			change_dir(tokens[1]), free_memory(tokens);
 		else if (_strcmp(tokens[0], "env") == 0)
